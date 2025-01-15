@@ -45,7 +45,7 @@ class FavoritesScreen extends StatelessWidget {
                         },
                         child: Container(
                             width: size.width,
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                             child: ProductsRow(
                                 imageUrl: product.imageUrl,
                                 price: product.price,
