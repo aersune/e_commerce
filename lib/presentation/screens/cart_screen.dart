@@ -3,7 +3,11 @@ import 'package:e_commerce/domain/database/favorites_data.dart';
 import 'package:e_commerce/domain/database/hive_box.dart';
 import 'package:e_commerce/presentation/widgets/products_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+
+import '../../domain/bloc/products_bloc.dart';
+import 'details_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -42,56 +46,63 @@ class _CartScreenState extends State<CartScreen> {
                     itemBuilder: (context, index) {
                       var cart = cartData[index];
                       var myBox = box.get(cart.id);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        child: ProductsRow(
-                            imageUrl: cart.imageUrl,
-                            price: cart.price.toString(),
-                            title: cart.name,
-                            brand: cart.brand,
-                            myWidget: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(Icons.more_vert),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    InkWell(
-                                        onTap: () {
-                                          setState(() {});
-                                          myBox!.amount >= 2 ? myBox.amount -= 1 : null;
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(3.0),
-                                          child: Icon(Icons.remove),
-                                        )),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: Text(
-                                        "${cart.amount}",
-                                        style: TextStyle(fontSize: 18),
+                      return InkWell(
+                        onTap: (){
+                          context.read<ProductsBloc>().add(ProductDetailsEvent(id: cart.id));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => DetailsScreen(event: ProductsLoadEvent())));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          child: ProductsRow(
+                              imageUrl: cart.imageUrl,
+                              price: cart.price.toString(),
+                              title: cart.name,
+                              brand: cart.brand,
+                              myWidget: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Icon(Icons.more_vert),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      InkWell(
+                                          onTap: () {
+                                            setState(() {});
+                                            myBox!.amount >= 2 ? myBox.amount -= 1 : null;
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(3.0),
+                                            child: Icon(Icons.remove),
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                        child: Text(
+                                          "${cart.amount}",
+                                          style: TextStyle(fontSize: 18),
+                                        ),
                                       ),
-                                    ),
-                                    InkWell(
-                                        onTap: () {
-                                          setState(() {});
-                                          myBox?.amount += 1;
-                                        },
-                                        child: Container(
-                                            padding: EdgeInsets.all(4),
-                                            decoration: BoxDecoration(
-                                                color: Color(0xff495057), borderRadius: BorderRadius.circular(8)),
-                                            child: Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                            ))),
-                                  ],
-                                ),
-                              ],
-                            )),
+                                      InkWell(
+                                          onTap: () {
+                                            setState(() {});
+                                            myBox?.amount += 1;
+                                          },
+                                          child: Container(
+                                              padding: EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff495057), borderRadius: BorderRadius.circular(8)),
+                                              child: Icon(
+                                                Icons.add,
+                                                color: Colors.white,
+                                              ))),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        ),
                       );
                     }),
               ),
