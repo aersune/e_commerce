@@ -1,16 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/common/app_style.dart';
 import 'package:e_commerce/domain/bloc/products_bloc.dart';
 import 'package:e_commerce/domain/database/favorites_data.dart';
 import 'package:e_commerce/domain/database/hive_box.dart';
 import 'package:e_commerce/presentation/screens/details_screen.dart';
 import 'package:e_commerce/presentation/widgets/products_row.dart';
-import 'package:e_commerce/presentation/widgets/product_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 
-import '../../../common/app_colors.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});

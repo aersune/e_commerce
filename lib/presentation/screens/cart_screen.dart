@@ -1,4 +1,3 @@
-import 'package:e_commerce/common/app_colors.dart';
 import 'package:e_commerce/common/app_style.dart';
 import 'package:e_commerce/domain/database/favorites_data.dart';
 import 'package:e_commerce/domain/database/hive_box.dart';
